@@ -14,6 +14,7 @@ import android.widget.Toolbar;
 
 import com.redrock.my.smusic.SongOfBangdan.BandMain;
 import com.redrock.my.smusic.SongOfBangdan.BangCMain;
+import com.redrock.my.smusic.SongOfBangdan.BangHMain;
 import com.redrock.my.smusic.SongOfBangdan.BangHkMain;
 
 import java.util.ArrayList;
@@ -48,6 +49,32 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setPagerSelect(0);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+
+
     //TAB点击事件
     private void initTabEvents() {
         tabEurope.setOnClickListener(this);
@@ -73,7 +100,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Fragment mTab1 = new BandMain();
         Fragment mTab2 = new BangCMain();
         Fragment mTab3 = new BangHkMain();
-        Fragment mTab4 = new BandMain();
+        Fragment mTab4 = new BangHMain();
         fragmentList.add(mTab1);
         fragmentList.add(mTab2);
         fragmentList.add(mTab3);
@@ -112,27 +139,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

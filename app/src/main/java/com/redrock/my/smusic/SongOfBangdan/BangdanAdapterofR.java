@@ -58,7 +58,7 @@ public class BangdanAdapterofR extends RecyclerView.Adapter<BangdanAdapterofR.My
 
             imageView = (ImageView) itemView.findViewById(R.id.song_item_album);
             tv1 = (TextView) itemView.findViewById(R.id.song_item_name);
-            tv1 = (TextView) itemView.findViewById(R.id.song_item_author);
+            tv2 = (TextView) itemView.findViewById(R.id.song_item_author);
         }
 }
 }

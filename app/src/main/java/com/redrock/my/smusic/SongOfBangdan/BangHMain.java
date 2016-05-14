@@ -40,7 +40,6 @@ public class BangHMain extends Fragment {
     private BangdanAdapterofR adapter;
     private List<BangdanItem> bangdanItemList = new ArrayList<>();
     private ProgressBar progressBar;
-    private int listId;
     private String time = Time.getTime();
 
     private String URLhttp="https://route.showapi.com/213-4?showapi_appid=19010&showapi_timestamp="+time+"&topid=26&showapi_sign=1e7df399f90547119cadb0eacdf07a03";
@@ -76,7 +75,7 @@ public class BangHMain extends Fragment {
                         Log.d("NetMusic",response);
                         Gson gson = new Gson();
                         JsonBangdan jsonBangdan = gson.fromJson(response, JsonBangdan.class);
-                        for(int i = 0;i<jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().size();i++){
+                        for(int i = 0;i<15;i++){
                             String songName = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getSongname();
                             String singerName = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getSingername();
                             String albumSmall = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getAlbumpic_small();

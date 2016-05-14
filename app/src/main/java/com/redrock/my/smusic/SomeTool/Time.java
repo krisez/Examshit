@@ -7,9 +7,10 @@ import java.util.Calendar;
  */
 public class Time {
     public static String  getTime() {
-        String month1 = null;
-        String minute = null;
-        String second = null;
+        String month1 ;
+        String minute ;
+        String second ;
+        String hour  ;
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
@@ -18,9 +19,16 @@ public class Time {
         int h = c.get(Calendar.HOUR_OF_DAY);
         int m = c.get(Calendar.MINUTE);
         int t = c.get(Calendar.SECOND);
+        if(h<10){
+            hour = "0"+h;
+        }
+        else
+            hour = String.valueOf(h);
         if(month<10) {
             month1 = "0" + month;
         }
+        else
+            month1 = String.valueOf(month);
         if(m<10){
             minute  = "0" + m;
         }
@@ -31,7 +39,7 @@ public class Time {
         }
         else
             second = String.valueOf(t);
-        String time = year + ""+ month1 + "" + day + "" + h + "" + minute + "" + second;
+        String time = year + ""+ month1 + "" + day + "" + hour + "" + minute + "" + second;
         return time;
     }
 }
