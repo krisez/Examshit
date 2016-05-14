@@ -4,18 +4,17 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.INotificationSideChannel;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -23,8 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.redrock.my.smusic.MainActivity;
-import com.redrock.my.smusic.PlayActivity;
+import com.redrock.my.smusic.PlaySong.PlayActivity;
 import com.redrock.my.smusic.SomeTool.DividerItemDecoration;
 import com.redrock.my.smusic.MyCallback;
 import com.redrock.my.smusic.MyHttp;
@@ -77,6 +75,9 @@ public class BandMain extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(view.getContext(),PlayActivity.class);
+                intent.putExtra("songName",bangdanItemList.get(position).getSongName());
+                intent.putExtra("songAuthor",bangdanItemList.get(position).getSongAuthor());
+                intent.putExtra("albumBig",bangdanItemList.get(position).getBigAlbum());
                 intent.putExtra("playUrl",bangdanItemList.get(position).getPlayUrl());
                 startActivity(intent);
             }
@@ -102,17 +103,27 @@ public class BandMain extends Fragment {
                             String albumSmall = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getAlbumpic_small();
                             String playUrl = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getUrl();
                             String downUrl = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getDownUrl();
-                            Bitmap bitmap = null;
+                            String bigImg = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getAlbumpic_big();
+                            Bitmap bitmap1 = null;
+                            Bitmap bitmap2 = null;
                             Log.d("NetMusic", songName);
                             try {
                                 URL u = new URL(albumSmall);
                                 HttpURLConnection conn = (HttpURLConnection) u.openConnection();
                                 BufferedInputStream is = new BufferedInputStream(conn.getInputStream());
-                                bitmap = BitmapFactory.decodeStream(is);
+                                bitmap1 = BitmapFactory.decodeStream(is);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            BangdanItem item = new BangdanItem(downUrl, playUrl, bitmap, singerName, songName);
+                            try {
+                                URL u = new URL(bigImg);
+                                HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+                                BufferedInputStream is = new BufferedInputStream(conn.getInputStream());
+                                bitmap2 = BitmapFactory.decodeStream(is);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            BangdanItem item = new BangdanItem(downUrl, playUrl, bitmap1, singerName, songName,bitmap2);
                             bangdanItemList.add(item);
                         }
                         Message message = new Message();

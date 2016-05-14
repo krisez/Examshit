@@ -10,17 +10,27 @@ import android.widget.TextView;
  */
 public class BangdanItem {
     private Bitmap songAlbum;
+    private Bitmap bigAlbum;
     private String songName;
     private String songAuthor;
     private String playUrl;
     private String downUrl;
 
-    public BangdanItem(String downUrl, String playUrl, Bitmap songAlbum, String songAuthor, String songName) {
+    public BangdanItem(String downUrl, String playUrl, Bitmap songAlbum, String songAuthor, String songName,Bitmap bigA) {
         this.downUrl = downUrl;
+        this.bigAlbum = bigA;
         this.playUrl = playUrl;
         this.songAlbum = songAlbum;
         this.songAuthor = songAuthor;
         this.songName = songName;
+    }
+
+    public Bitmap getBigAlbum() {
+        return bigAlbum;
+    }
+
+    public void setBigAlbum(Bitmap bigAlbum) {
+        this.bigAlbum = bigAlbum;
     }
 
     public String getDownUrl() {

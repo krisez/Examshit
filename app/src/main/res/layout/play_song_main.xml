@@ -3,12 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:id="@+id/song_albumPic"
+        android:scaleType="centerCrop"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/song_name"
+        android:layout_marginBottom="20dp"
         android:layout_centerHorizontal="true"
         android:textColor="@color/song_name"
+        android:textAlignment="center"
         android:textSize="36sp"
         android:paddingTop="24dp"
         />
@@ -18,50 +27,51 @@
         android:layout_height="wrap_content"
         android:textColor="@color/song_author"
         android:layout_centerHorizontal="true"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:padding="18dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/song_author"
         />
-    <ImageView
-        android:layout_below="@+id/song_author"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:id="@+id/song_albumPic"
-        />
-    <ProgressBar
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/song_albumPic"
-        android:id="@+id/song_rate"
-        style="?android:attr/progressBarStyleHorizontal"
-        />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/song_rate"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal">
-        <ImageButton
-            android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="120dp"
+        android:orientation="vertical">
+        <ProgressBar
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/song_last"
-            android:src="@android:drawable/ic_media_previous"
+            android:id="@+id/song_rate"
+            style="?android:attr/progressBarStyleHorizontal"
             />
-
-        <ImageButton
-            android:src="@android:drawable/ic_media_pause"
+        <LinearLayout
             android:layout_width="wrap_content"
+            android:id="@+id/control_song"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
-            android:id="@+id/song_pause"
-            />
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/song_last"
+                android:src="@android:drawable/ic_media_previous"
+                />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_media_next"
-            android:id="@+id/song_next"/>
+            <ImageButton
+                android:src="@android:drawable/ic_media_pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:id="@+id/song_pause"
+                />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_media_next"
+                android:id="@+id/song_next"/>
+        </LinearLayout>
     </LinearLayout>
+
 </RelativeLayout>

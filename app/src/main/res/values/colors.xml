@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="app_color">#0088ff</color>
-    <color name="song_author">#979797</color>
-    <color name="song_name">#ffffff</color>
+    <color name="song_author">#aaff0400</color>
+    <color name="song_name">#000000</color>
     <color name="item_pressed">#8b8080</color>
     <color name="item_normal">#6b6c7b</color>
 </resources>

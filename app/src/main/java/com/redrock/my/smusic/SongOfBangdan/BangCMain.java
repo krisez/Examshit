@@ -1,6 +1,7 @@
 package com.redrock.my.smusic.SongOfBangdan;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -16,10 +17,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.redrock.my.smusic.MyCallback;
 import com.redrock.my.smusic.MyHttp;
+import com.redrock.my.smusic.PlaySong.PlayActivity;
 import com.redrock.my.smusic.R;
 import com.redrock.my.smusic.SomeTool.DividerItemDecoration;
 import com.redrock.my.smusic.SomeTool.Time;
@@ -64,7 +67,22 @@ public class BangCMain extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL_LIST));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        adapter.setOnItemClickListener(new BangdanAdapterofR.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(view.getContext(),PlayActivity.class);
+                intent.putExtra("songName",bangdanItemList.get(position).getSongName());
+                intent.putExtra("songAuthor",bangdanItemList.get(position).getSongAuthor());
+                intent.putExtra("albumBig",bangdanItemList.get(position).getBigAlbum());
+                intent.putExtra("playUrl",bangdanItemList.get(position).getPlayUrl());
+                startActivity(intent);
+            }
 
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Toast.makeText(view.getContext(),"经过自我鉴定，决定下载还是不弹出来了",Toast.LENGTH_LONG);
+            }
+        });
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -81,17 +99,27 @@ public class BangCMain extends Fragment {
                             String albumSmall = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getAlbumpic_small();
                             String playUrl = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getUrl();
                             String downUrl = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getDownUrl();
-                            Bitmap bitmap = null;
+                            String bigImg = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getAlbumpic_big();
+                            Bitmap bitmap2 = null;
+                            Bitmap bitmap1 = null;
                             Log.d("NetMusic",songName);
                             try {
                                 URL u = new URL(albumSmall);
                                 HttpURLConnection conn = (HttpURLConnection) u.openConnection();
                                 BufferedInputStream is = new BufferedInputStream(conn.getInputStream());
-                                bitmap = BitmapFactory.decodeStream(is);
+                                bitmap1 = BitmapFactory.decodeStream(is);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            BangdanItem item = new BangdanItem(downUrl,playUrl,bitmap,singerName,songName);
+                            try {
+                                URL u = new URL(bigImg);
+                                HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+                                BufferedInputStream is = new BufferedInputStream(conn.getInputStream());
+                                bitmap2 = BitmapFactory.decodeStream(is);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            BangdanItem item = new BangdanItem(downUrl,playUrl,bitmap1,singerName,songName,bitmap2);
                             bangdanItemList.add(item);
                         }
                         Message message = new Message();
