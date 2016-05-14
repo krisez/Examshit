@@ -1,8 +1,10 @@
 package com.redrock.my.smusic.SongOfBangdan;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,11 +15,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.redrock.my.smusic.MainActivity;
+import com.redrock.my.smusic.PlayActivity;
 import com.redrock.my.smusic.SomeTool.DividerItemDecoration;
 import com.redrock.my.smusic.MyCallback;
 import com.redrock.my.smusic.MyHttp;
@@ -41,9 +48,9 @@ public class BandMain extends Fragment {
     private List<BangdanItem> bangdanItemList = new ArrayList<>();
     private ProgressBar progressBar;
     private String time = Time.getTime();
+    private ImageButton playButton;
 
-
-    private String URLhttp="https://route.showapi.com/213-4?showapi_appid=19010&showapi_timestamp=20160515011730"+"&topid=3&showapi_sign=1e7df399f90547119cadb0eacdf07a03";
+    private String URLhttp="https://route.showapi.com/213-4?showapi_appid=19010&showapi_timestamp="+time+"&topid=3&showapi_sign=1e7df399f90547119cadb0eacdf07a03";
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -55,9 +62,9 @@ public class BandMain extends Fragment {
     });
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        System.out.println(time);
+
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bangdan);
         adapter = new BangdanAdapterofR(view.getContext(), bangdanItemList);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycleView_bangdan);
@@ -66,6 +73,19 @@ public class BandMain extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL_LIST));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        adapter.setOnItemClickListener(new BangdanAdapterofR.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(view.getContext(),PlayActivity.class);
+                intent.putExtra("playUrl",bangdanItemList.get(position).getPlayUrl());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Toast.makeText(view.getContext(),"经过自我鉴定，决定下载还是不弹出来了",Toast.LENGTH_LONG);
+            }
+        });
         new Thread(new Runnable() {
             @Override
             public void run() {

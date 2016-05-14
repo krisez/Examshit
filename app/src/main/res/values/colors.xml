@@ -6,5 +6,6 @@
     <color name="app_color">#0088ff</color>
     <color name="song_author">#979797</color>
     <color name="song_name">#ffffff</color>
-    <color name="song_item_background">#6b6c7b</color>
+    <color name="item_pressed">#8b8080</color>
+    <color name="item_normal">#6b6c7b</color>
 </resources>

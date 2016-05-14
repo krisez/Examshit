@@ -2,10 +2,12 @@ package com.redrock.my.smusic.SongOfBangdan;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +30,24 @@ public class BangdanAdapterofR extends RecyclerView.Adapter<BangdanAdapterofR.My
         layoutInflater = LayoutInflater.from(mContex);
     }
 
+    //定义一个接口，传入两个点击方法
+    public interface OnItemClickListener{
+        void onItemClick(View view,int position);
+        void onItemLongClick(View view,int position);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    private OnItemClickListener onItemClickListener;//定义
+
+    //获取方法类
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.onItemClickListener = listener;
+    }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = layoutInflater.inflate(R.layout.bangdan_item,parent,false);
@@ -36,11 +56,30 @@ public class BangdanAdapterofR extends RecyclerView.Adapter<BangdanAdapterofR.My
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
-        BangdanItem bangdanItem = mDatas.get(position);
+    public void onBindViewHolder(final MyViewHolder holder,int position) {
+        final BangdanItem bangdanItem = mDatas.get(position);
         holder.imageView.setImageBitmap(bangdanItem.getSongAlbum());
         holder.tv1.setText(bangdanItem.getSongName());
         holder.tv2.setText(bangdanItem.getSongAuthor());
+
+        if(onItemClickListener != null){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int layoutPos = holder.getLayoutPosition();
+                    onItemClickListener.onItemClick(holder.itemView,layoutPos);
+                }
+            });
+
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int layoutPos = holder.getLayoutPosition();
+                    onItemClickListener.onItemLongClick(holder.itemView,layoutPos);
+                    return true;
+                }
+            });
+        }
     }
 
     @Override

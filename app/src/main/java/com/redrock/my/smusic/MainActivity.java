@@ -1,5 +1,7 @@
 package com.redrock.my.smusic;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -8,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toolbar;
@@ -35,6 +38,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private ImageView imageView2;
     private ImageView imageView3;
     private ImageView imageView4;
+
+    private ImageButton playButton;
+    private ImageButton downButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +75,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
 
 
     //TAB点击事件
