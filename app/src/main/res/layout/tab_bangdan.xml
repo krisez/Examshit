@@ -21,6 +21,12 @@
             android:textColor="#fff"
             android:paddingTop="15dp"
             />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bottom"
+            android:id="@+id/tab_img1"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -37,6 +43,12 @@
             android:textSize="18dp"
             android:textColor="#fff"
             android:paddingTop="15dp"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bottom"
+            android:id="@+id/tab_img2"
             />
     </LinearLayout>
 
@@ -55,6 +67,12 @@
             android:textColor="#fff"
             android:paddingTop="15dp"
             />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bottom"
+            android:id="@+id/tab_img3"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -71,6 +89,12 @@
             android:textSize="18dp"
             android:textColor="#fff"
             android:paddingTop="15dp"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bottom"
+            android:id="@+id/tab_img4"
             />
     </LinearLayout>
 

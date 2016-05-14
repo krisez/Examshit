@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.redrock.my.smusic.MainActivity">
 
@@ -22,7 +21,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/tab_title"/>
+    <include layout="@layout/tab_bangdan"/>
 
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/song_name"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/song_name"
+        android:textSize="36sp"
+        android:paddingTop="24dp"
+        />
+    <TextView
+        android:layout_below="@+id/song_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/song_author"
+        android:layout_centerHorizontal="true"
+        android:textSize="24sp"
+        android:padding="18dp"
+        android:id="@+id/song_author"
+        />
+    <ImageView
+        android:layout_below="@+id/song_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/song_albumPic"
+        />
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/song_albumPic"
+        android:id="@+id/song_rate"
+        style="?android:attr/progressBarStyleHorizontal"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/song_rate"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/song_last"
+            android:src="@android:drawable/ic_media_previous"
+            />
+
+        <ImageButton
+            android:src="@android:drawable/ic_media_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:id="@+id/song_pause"
+            />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_media_next"
+            android:id="@+id/song_next"/>
+    </LinearLayout>
+</RelativeLayout>
