@@ -15,18 +15,36 @@ public class BangdanItem {
     private String playUrl;
     private String downUrl;
 
-    public BangdanItem(Bitmap songAlbum, String songAuthor, String songName) {
+    public BangdanItem(String downUrl, String playUrl, Bitmap songAlbum, String songAuthor, String songName) {
+        this.downUrl = downUrl;
+        this.playUrl = playUrl;
         this.songAlbum = songAlbum;
         this.songAuthor = songAuthor;
         this.songName = songName;
     }
 
-    public Bitmap getSongAlbum() {
-        return songAlbum;
+    public String getDownUrl() {
+        return downUrl;
     }
 
-    public void setSongAlbum(Bitmap songAlbum) {
-        this.songAlbum = songAlbum;
+    public void setDownUrl(String downUrl) {
+        this.downUrl = downUrl;
+    }
+
+    public String getPlayUrl() {
+        return playUrl;
+    }
+
+    public void setPlayUrl(String playUrl) {
+        this.playUrl = playUrl;
+    }
+
+    public String getSongName() {
+        return songName;
+    }
+
+    public void setSongName(String songName) {
+        this.songName = songName;
     }
 
     public String getSongAuthor() {
@@ -37,11 +55,11 @@ public class BangdanItem {
         this.songAuthor = songAuthor;
     }
 
-    public String getSongName() {
-        return songName;
+    public Bitmap getSongAlbum() {
+        return songAlbum;
     }
 
-    public void setSongName(String songName) {
-        this.songName = songName;
+    public void setSongAlbum(Bitmap songAlbum) {
+        this.songAlbum = songAlbum;
     }
 }

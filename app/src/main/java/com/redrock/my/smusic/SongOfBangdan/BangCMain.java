@@ -18,10 +18,10 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
-import com.redrock.my.smusic.SomeTool.DividerItemDecoration;
 import com.redrock.my.smusic.MyCallback;
 import com.redrock.my.smusic.MyHttp;
 import com.redrock.my.smusic.R;
+import com.redrock.my.smusic.SomeTool.DividerItemDecoration;
 import com.redrock.my.smusic.SomeTool.Time;
 
 import java.io.BufferedInputStream;
@@ -34,7 +34,7 @@ import java.util.List;
  * Created by ASUS on 2016/5/14.
  */
 @SuppressLint("ValidFragment")
-public class BandMain extends Fragment {
+public class BangCMain extends Fragment {
 
     private RecyclerView recyclerView;
     private BangdanAdapterofR adapter;
@@ -43,8 +43,7 @@ public class BandMain extends Fragment {
     private int listId;
     private String time = Time.getTime();
 
-
-    private String URLhttp="https://route.showapi.com/213-4?showapi_appid=19010&showapi_timestamp="+time+"&topid=3&showapi_sign=1e7df399f90547119cadb0eacdf07a03";
+    private String URLhttp="https://route.showapi.com/213-4?showapi_appid=19010&showapi_timestamp="+time+"&topid=5&showapi_sign=1e7df399f90547119cadb0eacdf07a03";
 
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -60,9 +59,9 @@ public class BandMain extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bangdan);
-        adapter = new BangdanAdapterofR(view.getContext(), bangdanItemList);
+        adapter = new BangdanAdapterofR(view.getContext(),bangdanItemList);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycleView_bangdan);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL_LIST));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -71,20 +70,20 @@ public class BandMain extends Fragment {
             @Override
             public void run() {
                 final String address = URLhttp;
-                MyHttp.setHttpConnection(address, new MyCallback() {
+                MyHttp.setHttpConnection(address,new MyCallback() {
                     @Override
                     public void onFinish(String response) {
-                        Log.d("NetMusic", response);
+                        Log.d("NetMusic",response);
                         Gson gson = new Gson();
                         JsonBangdan jsonBangdan = gson.fromJson(response, JsonBangdan.class);
-                        for (int i = 0; i < jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().size(); i++) {
+                        for(int i = 0;i<jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().size();i++){
                             String songName = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getSongname();
                             String singerName = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getSingername();
                             String albumSmall = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getAlbumpic_small();
                             String playUrl = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getUrl();
                             String downUrl = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getDownUrl();
                             Bitmap bitmap = null;
-                            Log.d("NetMusic", songName);
+                            Log.d("NetMusic",songName);
                             try {
                                 URL u = new URL(albumSmall);
                                 HttpURLConnection conn = (HttpURLConnection) u.openConnection();
@@ -93,7 +92,7 @@ public class BandMain extends Fragment {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            BangdanItem item = new BangdanItem(downUrl, playUrl, bitmap, singerName, songName);
+                            BangdanItem item = new BangdanItem(downUrl,playUrl,bitmap,singerName,songName);
                             bangdanItemList.add(item);
                         }
                         Message message = new Message();
@@ -107,7 +106,6 @@ public class BandMain extends Fragment {
             }
         }).start();
     }
-
 
     @Nullable
     @Override

@@ -34,9 +34,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:id="@+id/song_item_author"
-                android:layout_below="@+id/song_item_name"
                 android:textSize="18sp"
-
                 />
         </LinearLayout>
     </LinearLayout>

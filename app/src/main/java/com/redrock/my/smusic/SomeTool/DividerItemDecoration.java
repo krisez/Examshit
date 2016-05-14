@@ -1,4 +1,4 @@
-package com.redrock.my.smusic.ItemDivider;
+package com.redrock.my.smusic.SomeTool;
 
 /*
  * Copyright (C) 2014 The Android Open Source Project
@@ -67,7 +67,6 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration
 	@Override
 	public void onDraw(Canvas c, RecyclerView parent)
 	{
-		Log.v("recyclerview - itemdecoration", "onDraw()");
 		 if (mOrientation == VERTICAL_LIST) {
 	            drawVertical(c, parent);
 	        } else {

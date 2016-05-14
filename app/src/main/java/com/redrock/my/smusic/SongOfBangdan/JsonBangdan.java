@@ -9,79 +9,103 @@ import java.util.List;
  */
 public class JsonBangdan {
 
-    private List<songList> songlist = new ArrayList<>();
+    private showapi_res_body showapi_res_body;
 
-    public List<songList> getSonglist() {
-        return songlist;
+    public showapi_res_body getShowapi_res_body() {
+        return showapi_res_body;
     }
 
-    public void setSonglist(List<songList> songlist) {
-        this.songlist = songlist;
+    public void setShowapi_res_body(showapi_res_body showapi_res_body) {
+        this.showapi_res_body = showapi_res_body;
     }
 
-    public static class songList{
-        private String albumpic_big;
-        private String albumpic_small;
-        private String downUrl;
-        private int seconds;
-        private String singername;
-        private String songname;
-        private String url;
+    public static class showapi_res_body{
+        private pagebean pagebean;
 
-        public String getAlbumpic_big() {
-            return albumpic_big;
+        public pagebean getPagebean() {
+            return pagebean;
         }
 
-        public void setAlbumpic_big(String albumpic_big) {
-            this.albumpic_big = albumpic_big;
+        public void setPagebean(pagebean pagebean) {
+            this.pagebean = pagebean;
         }
 
-        public String getUrl() {
-            return url;
-        }
+        public static class pagebean{
+            private List<songlist> songlist = new ArrayList<>();
 
-        public void setUrl(String url) {
-            this.url = url;
-        }
+            public List<songlist> getSonglist() {
+                return songlist;
+            }
 
-        public String getSingername() {
-            return singername;
-        }
+            public void setSonglist(List<songlist> songlist) {
+                this.songlist = songlist;
+            }
 
-        public void setSingername(String singername) {
-            this.singername = singername;
-        }
+            public static class songlist{
+                private String albumpic_big;
+                private String albumpic_small;
+                private String downUrl;
+                private int seconds;
+                private String singername;
+                private String songname;
+                private String url;
 
-        public String getDownUrl() {
-            return downUrl;
-        }
+                public String getAlbumpic_big() {
+                    return albumpic_big;
+                }
 
-        public void setDownUrl(String downUrl) {
-            this.downUrl = downUrl;
-        }
+                public void setAlbumpic_big(String albumpic_big) {
+                    this.albumpic_big = albumpic_big;
+                }
 
-        public String getAlbumpic_small() {
-            return albumpic_small;
-        }
+                public String getUrl() {
+                    return url;
+                }
 
-        public void setAlbumpic_small(String albumpic_small) {
-            this.albumpic_small = albumpic_small;
-        }
+                public void setUrl(String url) {
+                    this.url = url;
+                }
 
-        public int getSeconds() {
-            return seconds;
-        }
+                public String getSingername() {
+                    return singername;
+                }
 
-        public void setSeconds(int seconds) {
-            this.seconds = seconds;
-        }
+                public void setSingername(String singername) {
+                    this.singername = singername;
+                }
 
-        public String getSongname() {
-            return songname;
-        }
+                public String getDownUrl() {
+                    return downUrl;
+                }
 
-        public void setSongname(String songname) {
-            this.songname = songname;
+                public void setDownUrl(String downUrl) {
+                    this.downUrl = downUrl;
+                }
+
+                public String getAlbumpic_small() {
+                    return albumpic_small;
+                }
+
+                public void setAlbumpic_small(String albumpic_small) {
+                    this.albumpic_small = albumpic_small;
+                }
+
+                public int getSeconds() {
+                    return seconds;
+                }
+
+                public void setSeconds(int seconds) {
+                    this.seconds = seconds;
+                }
+
+                public String getSongname() {
+                    return songname;
+                }
+
+                public void setSongname(String songname) {
+                    this.songname = songname;
+                }
+            }
         }
     }
 }

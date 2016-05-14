@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.Toolbar;
 
 import com.redrock.my.smusic.SongOfBangdan.BandMain;
+import com.redrock.my.smusic.SongOfBangdan.BangCMain;
+import com.redrock.my.smusic.SongOfBangdan.BangHkMain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setActionBar(toolbar);
 
@@ -67,14 +70,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         imageView4 = (ImageView) findViewById(R.id.tab_img4);
 
         fragmentList = new ArrayList<>();
-        Fragment mTab1 = new BandMain(3);
-        Fragment mTab2 = new BandMain(5);
-        Fragment mTab3 = new BandMain(6);
-        Fragment mTab4 = new BandMain(26);
+        Fragment mTab1 = new BandMain();
+        Fragment mTab2 = new BangCMain();
+        Fragment mTab3 = new BangHkMain();
+        Fragment mTab4 = new BandMain();
         fragmentList.add(mTab1);
         fragmentList.add(mTab2);
         fragmentList.add(mTab3);
         fragmentList.add(mTab4);
+
         //ViewPagerAdapter 设置
         adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -87,7 +91,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 return fragmentList.size();
             }
         };
+
         viewPager.setAdapter(adapter);
+
         //监听ViewPager的改变
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -114,7 +120,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
@@ -180,6 +185,4 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setTab(i);
         viewPager.setCurrentItem(i);
     }
-
-
 }
