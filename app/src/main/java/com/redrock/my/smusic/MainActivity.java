@@ -58,7 +58,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         initView();
         initTabEvents();
-        setPagerSelect(0);
+        setPagerSelect(Integer.parseInt(getIntent().getStringExtra("hhh")));
     }
 
     @Override
