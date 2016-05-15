@@ -15,3 +15,4 @@
 ## 最后的歌曲下载通过长按item实现(本来想玩QQ那种长按蹦出来小的选项框的，但是崩了几次了)
 <img src="https://github.com/krisez/Examshit/blob/master/gif/end.gif" width="200px" height="250px"/>
 <br/>
+##### 小小字体说一句，解析用的Gson,会死么（忐忑~~~）
