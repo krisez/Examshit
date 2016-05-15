@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,13 +15,18 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.widget.LinearLayout.LayoutParams;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.redrock.my.smusic.Download.DownloadM;
 import com.redrock.my.smusic.PlaySong.PlayActivity;
 import com.redrock.my.smusic.SomeTool.DividerItemDecoration;
 import com.redrock.my.smusic.MyCallback;
@@ -40,6 +46,7 @@ import java.util.List;
 @SuppressLint("ValidFragment")
 public class BandMain extends Fragment {
 
+    private DownloadM downloadM = new DownloadM();
     private RecyclerView recyclerView;
     private BangdanAdapterofR adapter;
     private List<BangdanItem> bangdanItemList = new ArrayList<>();
@@ -93,8 +100,22 @@ public class BandMain extends Fragment {
             }
 
             @Override
-            public void onItemLongClick(View view, int position) {
-                Toast.makeText(view.getContext(), "文件开始下载", Toast.LENGTH_SHORT).show();
+            public void onItemLongClick(final View view, final int position) {
+                Toast.makeText(view.getContext(), "开始下载...", Toast.LENGTH_SHORT).show();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        int result = downloadM.downFile(bangdanItemList.get(position).getDownUrl(),bangdanItemList.get(position).getSongName(),".mp3");
+                        if(result == 0){
+                            Toast.makeText(view.getContext(), "下载完成", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(result == 1){
+                            Toast.makeText(view.getContext(), "文件已存在...", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                            Toast.makeText(view.getContext(), "下载失败...", Toast.LENGTH_SHORT).show();
+                    }
+                }).start();
             }
         });
         getData();
