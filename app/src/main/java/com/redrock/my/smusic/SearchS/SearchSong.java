@@ -40,6 +40,8 @@ import java.util.List;
  */
 public class SearchSong extends AppCompatActivity{
 
+    private int isSearch = 0;
+
     private EditText songKey;
     private Button searchButton;
     private RecyclerView recyclerView;
@@ -53,6 +55,7 @@ public class SearchSong extends AppCompatActivity{
         public boolean handleMessage(Message msg) {
             adapter.notifyDataSetChanged();
             progressBar.setVisibility(View.GONE);
+            isSearch = 1;
             onStop();
             return true;
         }
@@ -97,54 +100,59 @@ public class SearchSong extends AppCompatActivity{
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        final String address = "https://route.showapi.com/213-1?keyword="+songKey.getText().toString()+"&page=1&showapi_appid=19010&showapi_timestamp="+time+"&showapi_sign=1e7df399f90547119cadb0eacdf07a03";
-                        MyHttp.setHttpConnection(address, new MyCallback() {
-                            @Override
-                            public void onFinish(String response) {
-                                Gson gson = new Gson();
-                                JSONSearch jsonSearch = gson.fromJson(response, JSONSearch.class);
-                                for (int i = 0; i < 10; i++) {
-                                    String songName = songKey.getText().toString();
-                                    String singerName = jsonSearch.getShowapi_res_body().getPagebean().getContentlist().get(i).getSingername();
-                                    String albumSmall = jsonSearch.getShowapi_res_body().getPagebean().getContentlist().get(i).getAlbumpic_small();
-                                    String playUrl = jsonSearch.getShowapi_res_body().getPagebean().getContentlist().get(i).getM4a();
-                                    String downUrl = jsonSearch.getShowapi_res_body().getPagebean().getContentlist().get(i).getDownUrl();
-                                    String bigImg = jsonSearch.getShowapi_res_body().getPagebean().getContentlist().get(i).getAlbumpic_big();
-                                    Bitmap bitmap1 = null;
-                                    Bitmap bitmap2 = null;
-                                    try {
-                                        URL u = new URL(albumSmall);
-                                        HttpURLConnection conn = (HttpURLConnection) u.openConnection();
-                                        BufferedInputStream is = new BufferedInputStream(conn.getInputStream());
-                                        bitmap1 = BitmapFactory.decodeStream(is);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
+                if (isSearch != 0) {
+                    searchList.removeAll(searchList);
+                    adapter.notifyDataSetChanged();
+                }
+                    progressBar.setVisibility(View.VISIBLE);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            final String address = "https://route.showapi.com/213-1?keyword=" + songKey.getText().toString() + "&page=1&showapi_appid=19010&showapi_timestamp=" + time + "&showapi_sign=1e7df399f90547119cadb0eacdf07a03";
+                            MyHttp.setHttpConnection(address, new MyCallback() {
+                                @Override
+                                public void onFinish(String response) {
+                                    Gson gson = new Gson();
+                                    JSONSearch jsonSearch = gson.fromJson(response, JSONSearch.class);
+                                    for (int i = 0; i < 10; i++) {
+                                        String songName = jsonSearch.getShowapi_res_body().getPagebean().getContentlist().get(i).getSongname();
+                                        String singerName = jsonSearch.getShowapi_res_body().getPagebean().getContentlist().get(i).getSingername();
+                                        String albumSmall = jsonSearch.getShowapi_res_body().getPagebean().getContentlist().get(i).getAlbumpic_small();
+                                        String playUrl = jsonSearch.getShowapi_res_body().getPagebean().getContentlist().get(i).getM4a();
+                                        String downUrl = jsonSearch.getShowapi_res_body().getPagebean().getContentlist().get(i).getDownUrl();
+                                        String bigImg = jsonSearch.getShowapi_res_body().getPagebean().getContentlist().get(i).getAlbumpic_big();
+                                        Bitmap bitmap1 = null;
+                                        Bitmap bitmap2 = null;
+                                        try {
+                                            URL u = new URL(albumSmall);
+                                            HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+                                            BufferedInputStream is = new BufferedInputStream(conn.getInputStream());
+                                            bitmap1 = BitmapFactory.decodeStream(is);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        try {
+                                            URL u = new URL(bigImg);
+                                            HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+                                            BufferedInputStream is = new BufferedInputStream(conn.getInputStream());
+                                            bitmap2 = BitmapFactory.decodeStream(is);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        Search search = new Search(bitmap2, downUrl, playUrl, bitmap1, singerName, songName);
+                                        searchList.add(search);
                                     }
-                                    try {
-                                        URL u = new URL(bigImg);
-                                        HttpURLConnection conn = (HttpURLConnection) u.openConnection();
-                                        BufferedInputStream is = new BufferedInputStream(conn.getInputStream());
-                                        bitmap2 = BitmapFactory.decodeStream(is);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-                                    Search search = new Search(bitmap2,downUrl,playUrl,bitmap1,singerName,songName);
-                                    searchList.add(search);
+                                    Message message = new Message();
+                                    handler.sendMessage(message);
                                 }
-                                Message message = new Message();
-                                handler.sendMessage(message);
-                            }
 
-                            @Override
-                            public void onError(Exception e) {
-                            }
-                        });
-                    }
-                }).start();
+                                @Override
+                                public void onError(Exception e) {
+                                }
+                            });
+                        }
+                    }).start();
+
             }
         });
 
