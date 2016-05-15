@@ -64,7 +64,7 @@ public class PlayListActivity extends AppCompatActivity {
             @Override
             public void onItemLongClick(View view, int position) {
                 String sth = mDatas.get(position).getName();
-                db.delete("task", "SONGNAME = ?", new String[]{sth});
+                db.delete("list", "SONGNAME = ?", new String[]{sth});
                 adapter.del(position);
                 Toast.makeText(PlayListActivity.this,"已删该条记录",Toast.LENGTH_SHORT).show();
             }
