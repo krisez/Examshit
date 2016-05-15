@@ -1,11 +1,14 @@
 package com.redrock.my.smusic.PlaySong;
 
 import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -46,7 +49,9 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
         initViews();
         initEvents();
-        SavaData();
+        if(getIntent().getIntExtra("refuse",0) != 1230) {
+            SavaData();
+        }
 
         new Thread(new Runnable() {
             @Override
@@ -102,18 +107,8 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.song_last:
-                /**
-                 *
-                 * 上一个id所携带的url
-                 */
-                player.stop();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        player.playUrl(getIntent().getStringExtra("playUrl"));
-                    }
-                }).start();
-
+                //原谅我利用数据库的id来查找歌曲，但是蛋疼的不知道发生了什么，哎
+                Toast.makeText(PlayActivity.this, "WATI...", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.song_pause:
                 if(clickPause == 0) {
@@ -132,18 +127,13 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                  *
                  * 下一个id所携带的url
                  */
-                player.stop();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        player.playUrl(getIntent().getStringExtra("playUrl"));
-                    }
-                }).start();
-
+                //原谅我利用数据库的id来查找歌曲，但是蛋疼的不知道发生了什么，哎
+                Toast.makeText(PlayActivity.this, "WATI...", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
+    //给activity销毁就停歌了。。不然蛋疼
     @Override
     protected void onDestroy() {
         super.onDestroy();

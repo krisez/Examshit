@@ -59,6 +59,7 @@ public class PlayListActivity extends AppCompatActivity {
                 intent.putExtra("songName",dataname);
                 intent.putExtra("songAuthor", dataauthor);
                 intent.putExtra("playUrl", url);
+                intent.putExtra("refuse",1230);
                 startActivity(intent);
             }
 
