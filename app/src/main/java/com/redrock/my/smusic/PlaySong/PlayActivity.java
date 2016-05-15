@@ -151,6 +151,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     void SavaData(){
+        helper = new MusicHelper(this,"LIST.db",null,1);
         db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("SONGNAME",getIntent().getStringExtra("songName"));

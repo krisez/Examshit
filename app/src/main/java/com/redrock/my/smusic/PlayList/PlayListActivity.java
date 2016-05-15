@@ -35,6 +35,7 @@ public class PlayListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_list);
 
+        helper = new MusicHelper(this,"LIST.db",null,1);
         initdata();
         initView();
 
@@ -89,7 +90,7 @@ public class PlayListActivity extends AppCompatActivity {
             do{
                 String name = cursor.getString(cursor.getColumnIndex("SONGNAME"));
                 String author = cursor.getString(cursor.getColumnIndex("SINGERNAME"));
-                String url = cursor.getString(cursor.getColumnIndex("PALYURL"));
+                String url = cursor.getString(cursor.getColumnIndex("PLAYURL"));
                 mDatas.add(new PlayList(author,name,url));
             }while (cursor.moveToPrevious());
         }
