@@ -94,7 +94,7 @@ public class BangHMain extends Fragment {
                         Log.d("NetMusic",response);
                         Gson gson = new Gson();
                         JsonBangdan jsonBangdan = gson.fromJson(response, JsonBangdan.class);
-                        for(int i = 0;i<15;i++){
+                        for(int i = 0;i<30;i++){
                             String songName = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getSongname();
                             String singerName = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getSingername();
                             String albumSmall = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getAlbumpic_small();

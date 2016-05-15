@@ -1,6 +1,5 @@
 package com.redrock.my.smusic;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,11 +9,12 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.redrock.my.smusic.SearchS.SearchSong;
 import com.redrock.my.smusic.SongOfBangdan.BandMain;
 import com.redrock.my.smusic.SongOfBangdan.BangCMain;
 import com.redrock.my.smusic.SongOfBangdan.BangHMain;
@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
+
+    public static final int REQUEST_CODE=0;
+
 
     private ViewPager viewPager;
     private FragmentPagerAdapter adapter;
@@ -38,9 +41,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private ImageView imageView2;
     private ImageView imageView3;
     private ImageView imageView4;
-
-    private ImageButton playButton;
-    private ImageButton downButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,14 +64,22 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
+       switch (item.getItemId()){
+           case R.id.downloadSong:
+               Toast.makeText(this,"WAIT……",Toast.LENGTH_LONG);
+               break;
+           case R.id.action_settings:
+               Intent intent = new Intent(MainActivity.this,SetTool.class);
+               startActivityForResult(intent,REQUEST_CODE);
+               break;
+           case R.id.search_song:
+               Intent search = new Intent(MainActivity.this, SearchSong.class);
+               startActivity(search);
+               break;
+           case R.id.exitApp:
+               break;
+       }
 
         return super.onOptionsItemSelected(item);
     }

@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".PlaySong.PlayActivity"/>
-        <activity android:name=".SomeTool.SearchSong"/>
+        <activity android:name=".SearchS.SearchSong"/>
+        <activity android:name=".SetTool"/>
     </application>
 
 </manifest>

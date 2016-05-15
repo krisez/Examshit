@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.redrock.my.smusic.PlaySong.PlayActivity;
+import com.redrock.my.smusic.PlaySong.Player;
 import com.redrock.my.smusic.SomeTool.DividerItemDecoration;
 import com.redrock.my.smusic.MyCallback;
 import com.redrock.my.smusic.MyHttp;
@@ -46,7 +47,6 @@ public class BandMain extends Fragment {
     private List<BangdanItem> bangdanItemList = new ArrayList<>();
     private ProgressBar progressBar;
     private String time = Time.getTime();
-    private ImageButton playButton;
 
     private String URLhttp="https://route.showapi.com/213-4?showapi_appid=19010&showapi_timestamp="+time+"&topid=3&showapi_sign=1e7df399f90547119cadb0eacdf07a03";
     private Handler handler = new Handler(new Handler.Callback() {
@@ -74,12 +74,12 @@ public class BandMain extends Fragment {
         adapter.setOnItemClickListener(new BangdanAdapterofR.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(view.getContext(),PlayActivity.class);
-                intent.putExtra("songName",bangdanItemList.get(position).getSongName());
-                intent.putExtra("songAuthor",bangdanItemList.get(position).getSongAuthor());
-                intent.putExtra("albumBig",bangdanItemList.get(position).getBigAlbum());
-                intent.putExtra("playUrl",bangdanItemList.get(position).getPlayUrl());
-                startActivity(intent);
+                    Intent intent = new Intent(view.getContext(), PlayActivity.class);
+                    intent.putExtra("songName", bangdanItemList.get(position).getSongName());
+                    intent.putExtra("songAuthor", bangdanItemList.get(position).getSongAuthor());
+                    intent.putExtra("albumBig", bangdanItemList.get(position).getBigAlbum());
+                    intent.putExtra("playUrl", bangdanItemList.get(position).getPlayUrl());
+                    startActivity(intent);
             }
 
             @Override
@@ -97,7 +97,7 @@ public class BandMain extends Fragment {
                         Log.d("NetMusic", response);
                         Gson gson = new Gson();
                         JsonBangdan jsonBangdan = gson.fromJson(response, JsonBangdan.class);
-                        for (int i = 0; i < 15; i++) {
+                        for (int i = 0; i < 30; i++) {
                             String songName = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getSongname();
                             String singerName = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getSingername();
                             String albumSmall = jsonBangdan.getShowapi_res_body().getPagebean().getSonglist().get(i).getAlbumpic_small();

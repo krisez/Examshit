@@ -122,4 +122,11 @@ public class Player implements OnBufferingUpdateListener, OnCompletionListener,
             Log.e(currentProgress + "% play", percent + " buffer");
         }
 
+        public boolean isPlayed(){
+            if(mediaPlayer.isPlaying())
+                return true;
+            else
+                return false;
+        }
+
     }
