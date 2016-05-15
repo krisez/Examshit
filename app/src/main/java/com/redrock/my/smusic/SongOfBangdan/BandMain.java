@@ -9,7 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.INotificationSideChannel;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,13 +17,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.redrock.my.smusic.PlaySong.PlayActivity;
-import com.redrock.my.smusic.PlaySong.Player;
 import com.redrock.my.smusic.SomeTool.DividerItemDecoration;
 import com.redrock.my.smusic.MyCallback;
 import com.redrock.my.smusic.MyHttp;
@@ -47,13 +45,15 @@ public class BandMain extends Fragment {
     private List<BangdanItem> bangdanItemList = new ArrayList<>();
     private ProgressBar progressBar;
     private String time = Time.getTime();
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private String URLhttp="https://route.showapi.com/213-4?showapi_appid=19010&showapi_timestamp="+time+"&topid=3&showapi_sign=1e7df399f90547119cadb0eacdf07a03";
     private Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
                 adapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
                 onStop();
             return true;
         }
@@ -63,6 +63,7 @@ public class BandMain extends Fragment {
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_top);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bangdan);
         adapter = new BangdanAdapterofR(view.getContext(), bangdanItemList);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycleView_bangdan);
@@ -70,6 +71,15 @@ public class BandMain extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL_LIST));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Toast.makeText(view.getContext(), "重新加载……", Toast.LENGTH_SHORT).show();
+                bangdanItemList.removeAll(bangdanItemList);
+                adapter.notifyDataSetChanged();
+                getData();
+            }
+        });
 
         adapter.setOnItemClickListener(new BangdanAdapterofR.OnItemClickListener() {
             @Override
@@ -84,9 +94,20 @@ public class BandMain extends Fragment {
 
             @Override
             public void onItemLongClick(View view, int position) {
-                Toast.makeText(view.getContext(),"经过自我鉴定，决定下载还是不弹出来了",Toast.LENGTH_LONG).show();
+                Toast.makeText(view.getContext(), "文件开始下载", Toast.LENGTH_SHORT).show();
             }
         });
+        getData();
+    }
+
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.bangdan_main,container,false);
+    }
+
+    public void getData(){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -136,12 +157,5 @@ public class BandMain extends Fragment {
                 });
             }
         }).start();
-    }
-
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.bangdan_main,container,false);
     }
 }

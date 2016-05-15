@@ -42,6 +42,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private ImageView imageView3;
     private ImageView imageView4;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +79,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                startActivity(search);
                break;
            case R.id.exitApp:
+               Toast.makeText(MainActivity.this, "退出APP", Toast.LENGTH_SHORT).show();
+               onDestroy();
                break;
        }
 
