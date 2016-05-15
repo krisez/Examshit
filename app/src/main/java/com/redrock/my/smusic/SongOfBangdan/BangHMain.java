@@ -100,15 +100,8 @@ public class BangHMain extends Fragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        int result = downloadM.downFile(bangdanItemList.get(position).getDownUrl(),bangdanItemList.get(position).getSongName(),".mp3");
-                        if(result == 0){
-                            Toast.makeText(view.getContext(), "下载完成", Toast.LENGTH_SHORT).show();
-                        }
-                        else if(result == 1){
-                            Toast.makeText(view.getContext(), "文件已存在...", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                            Toast.makeText(view.getContext(), "下载失败...", Toast.LENGTH_SHORT).show();
+                        downloadM.downFile(bangdanItemList.get(position).getDownUrl(),bangdanItemList.get(position).getSongName(),".mp3");
+                        Toast.makeText(view.getContext(), "下载完成", Toast.LENGTH_SHORT).show();
                     }
                 }).start();
             }
