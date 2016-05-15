@@ -1,5 +1,7 @@
 package com.redrock.my.smusic.PlaySong;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Message;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import com.redrock.my.smusic.MyCallback;
 import com.redrock.my.smusic.MyHttp;
+import com.redrock.my.smusic.PlayList.MusicHelper;
 import com.redrock.my.smusic.R;
 
 import java.util.logging.Handler;
@@ -23,33 +26,19 @@ import java.util.logging.Handler;
  */
 public class PlayActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final int PROCESSING = 1;
-    private static final int FAILURE = -1;
     private int clickPause = 0;
 
+    private MusicHelper helper;
+    private SQLiteDatabase db;
     private SeekBar musicProgress;
     private Player player;
     private TextView songName;
     private TextView songAuthor;
     private ImageView songAlbum;
     private ImageButton preSong;
-    private ProgressBar progressBar;
     private ImageButton toSong;
     private ImageButton nextSong;
 
-    private android.os.Handler handler = new android.os.Handler(new android.os.Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            switch (msg.what) {
-                case PROCESSING: // 更新进度
-                    progressBar.setProgress(msg.getData().getInt("size"));
-                    float num = (float) progressBar.getProgress()
-                            / (float) progressBar.getMax();
-                    break;
-            }
-            return true;
-        }
-    });
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +46,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
 
         initViews();
         initEvents();
+        SavaData();
 
         new Thread(new Runnable() {
             @Override
@@ -112,7 +102,18 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.song_last:
-                Toast.makeText(PlayActivity.this, "WAIT…………", Toast.LENGTH_SHORT).show();
+                /**
+                 *
+                 * 上一个id所携带的url
+                 */
+                player.stop();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        player.playUrl(getIntent().getStringExtra("playUrl"));
+                    }
+                }).start();
+
                 break;
             case R.id.song_pause:
                 if(clickPause == 0) {
@@ -127,7 +128,18 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.song_next:
-                Toast.makeText(PlayActivity.this, "WAIT…………", Toast.LENGTH_SHORT).show();
+                /**
+                 *
+                 * 下一个id所携带的url
+                 */
+                player.stop();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        player.playUrl(getIntent().getStringExtra("playUrl"));
+                    }
+                }).start();
+
                 break;
         }
     }
@@ -136,5 +148,14 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     protected void onDestroy() {
         super.onDestroy();
         player.stop();
+    }
+
+    void SavaData(){
+        db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("SONGNAME",getIntent().getStringExtra("songName"));
+        values.put("SINGERNAME",getIntent().getStringExtra("songAuthor"));
+        values.put("PLAYURL",getIntent().getStringExtra("playUrl"));
+        db.insert("list", null, values);
     }
 }

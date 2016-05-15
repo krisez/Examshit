@@ -1,6 +1,7 @@
 package com.redrock.my.smusic;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -14,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.redrock.my.smusic.PlayList.MusicHelper;
+import com.redrock.my.smusic.PlayList.PlayListActivity;
 import com.redrock.my.smusic.SearchS.SearchSong;
 import com.redrock.my.smusic.SongOfBangdan.BandMain;
 import com.redrock.my.smusic.SongOfBangdan.BangCMain;
@@ -27,6 +30,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     public static final int REQUEST_CODE=0;
 
+    private MusicHelper helper;
+    private SQLiteDatabase db;
 
     private ViewPager viewPager;
     private FragmentPagerAdapter adapter;
@@ -67,8 +72,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public boolean onOptionsItemSelected(MenuItem item) {
 
        switch (item.getItemId()){
-           case R.id.downloadSong:
-               Toast.makeText(this,"WAIT……",Toast.LENGTH_LONG).show();
+           case R.id.playList:
+               Intent p = new Intent(MainActivity.this, PlayListActivity.class);
+               startActivityForResult(p,REQUEST_CODE);
                break;
            case R.id.action_settings:
                Intent intent = new Intent(MainActivity.this,SetTool.class);
@@ -76,11 +82,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                break;
            case R.id.search_song:
                Intent search = new Intent(MainActivity.this, SearchSong.class);
-               startActivity(search);
+               startActivityForResult(search,REQUEST_CODE);
                break;
            case R.id.exitApp:
                Toast.makeText(MainActivity.this, "退出APP", Toast.LENGTH_SHORT).show();
                onDestroy();
+               finish();
                break;
        }
 
@@ -98,6 +105,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private void initView() {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
+
+        helper = new MusicHelper(this,"LIST.db",null,1);
+        helper.getWritableDatabase();
 
         tabEurope = (LinearLayout) findViewById(R.id.europe_tab);
         tabChina = (LinearLayout) findViewById(R.id.china_tab);

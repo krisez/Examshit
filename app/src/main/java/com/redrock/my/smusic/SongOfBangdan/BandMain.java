@@ -1,7 +1,9 @@
 package com.redrock.my.smusic.SongOfBangdan;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.redrock.my.smusic.Download.DownloadM;
+import com.redrock.my.smusic.PlayList.MusicHelper;
 import com.redrock.my.smusic.PlaySong.PlayActivity;
 import com.redrock.my.smusic.SomeTool.DividerItemDecoration;
 import com.redrock.my.smusic.MyCallback;

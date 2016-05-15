@@ -21,9 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PlaySong.PlayActivity"/>
-        <activity android:name=".SearchS.SearchSong"/>
-        <activity android:name=".SetTool"/>
+        <activity android:name=".PlaySong.PlayActivity" />
+        <activity android:name=".SearchS.SearchSong" />
+        <activity android:name=".SetTool" />
+        <activity android:name=".PlayList.PlayListActivity"></activity>
     </application>
 
 </manifest>
