@@ -80,7 +80,7 @@ public class BangHkMain extends Fragment {
 
             @Override
             public void onItemLongClick(View view, int position) {
-                Toast.makeText(view.getContext(),"经过自我鉴定，决定下载还是不弹出来了",Toast.LENGTH_LONG);
+                Toast.makeText(view.getContext(),"经过自我鉴定，决定下载还是不弹出来了",Toast.LENGTH_LONG).show();
             }
         });
         new Thread(new Runnable() {

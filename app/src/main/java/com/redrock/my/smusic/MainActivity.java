@@ -67,7 +67,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
        switch (item.getItemId()){
            case R.id.downloadSong:
-               Toast.makeText(this,"WAIT……",Toast.LENGTH_LONG);
+               Toast.makeText(this,"WAIT……",Toast.LENGTH_LONG).show();
                break;
            case R.id.action_settings:
                Intent intent = new Intent(MainActivity.this,SetTool.class);
