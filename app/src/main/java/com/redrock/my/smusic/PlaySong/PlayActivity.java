@@ -1,28 +1,26 @@
 package com.redrock.my.smusic.PlaySong;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.ContentValues;
-import android.content.Intent;
-import android.database.Cursor;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.redrock.my.smusic.MyCallback;
-import com.redrock.my.smusic.MyHttp;
+import com.redrock.my.smusic.Download.DownloadM;
 import com.redrock.my.smusic.PlayList.MusicHelper;
 import com.redrock.my.smusic.R;
-
-import java.util.logging.Handler;
 
 /**
  * Created by ASUS on 2016/5/15.
@@ -41,6 +39,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton preSong;
     private ImageButton toSong;
     private ImageButton nextSong;
+    private DownloadM downMusic = new DownloadM();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +107,7 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.song_last:
                 //原谅我利用数据库的id来查找歌曲，但是蛋疼的不知道发生了什么，哎
-                Toast.makeText(PlayActivity.this, "WATI...", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PlayActivity.this, "WATI...", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.song_pause:
                 if(clickPause == 0) {
@@ -148,5 +147,45 @@ public class PlayActivity extends AppCompatActivity implements View.OnClickListe
         values.put("SINGERNAME",getIntent().getStringExtra("songAuthor"));
         values.put("PLAYURL",getIntent().getStringExtra("playUrl"));
         db.insert("list", null, values);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.play_song,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.song_xq:
+                Toast.makeText(PlayActivity.this, "傲娇：没得！哼╭(╯^╰)╮..", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.song_down:
+                Handler handler = new Handler(new Handler.Callback() {
+                    @Override
+                    public boolean handleMessage(Message msg) {
+                        int pg = 0;
+                        Notification notification = new Notification.Builder(PlayActivity.this)
+                                .setTicker("开始下载")
+                                .setSmallIcon(R.drawable.kr)
+                                .setContentTitle("开始下载...")
+                                .setProgress(100,pg,false)
+                                .build();
+                        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                        manager.notify(1,notification);
+                        return false;
+                    }
+                });
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        downMusic.downFile(getIntent().getStringExtra("playDown"),getIntent().getStringExtra("songName"),".mp3");
+
+                    }
+                }).start();
+                break;
+        }
+        return super.onContextItemSelected(item);
     }
 }

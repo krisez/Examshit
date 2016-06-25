@@ -73,7 +73,7 @@ public class FileUtils {
             while((cout = inputStream.read(buffer))!=-1){
                 outStream.write(buffer,0,cout);
             }
-            outStream.flush();
+           outStream.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -82,7 +82,7 @@ public class FileUtils {
             try {
                 outStream.close();
                 inputStream.close();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

@@ -1,11 +1,14 @@
 package com.redrock.my.smusic;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.Menu;
@@ -22,13 +25,14 @@ import com.redrock.my.smusic.SongOfBangdan.BandMain;
 import com.redrock.my.smusic.SongOfBangdan.BangCMain;
 import com.redrock.my.smusic.SongOfBangdan.BangHMain;
 import com.redrock.my.smusic.SongOfBangdan.BangHkMain;
+import com.redrock.my.smusic.SongOfBangdan.BangdanAdapterofR;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
-    public static final int REQUEST_CODE=0;
+    public static final int REQUEST_CODE = 0;
 
     private MusicHelper helper;
     private SQLiteDatabase db;
@@ -71,25 +75,25 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-       switch (item.getItemId()){
-           case R.id.playList:
-               Intent p = new Intent(MainActivity.this, PlayListActivity.class);
-               startActivityForResult(p,REQUEST_CODE);
-               break;
-           case R.id.action_settings:
-               Intent intent = new Intent(MainActivity.this,SetTool.class);
-               startActivityForResult(intent,REQUEST_CODE);
-               break;
-           case R.id.search_song:
-               Intent search = new Intent(MainActivity.this, SearchSong.class);
-               startActivityForResult(search,REQUEST_CODE);
-               break;
-           case R.id.exitApp:
-               Toast.makeText(MainActivity.this, "退出APP", Toast.LENGTH_SHORT).show();
-               onDestroy();
-               finish();
-               break;
-       }
+        switch (item.getItemId()) {
+            case R.id.playList:
+                Intent p = new Intent(MainActivity.this, PlayListActivity.class);
+                startActivityForResult(p, REQUEST_CODE);
+                break;
+            case R.id.action_settings:
+                Intent intent = new Intent(MainActivity.this, SetTool.class);
+                startActivityForResult(intent, REQUEST_CODE);
+                break;
+            case R.id.search_song:
+                Intent search = new Intent(MainActivity.this, SearchSong.class);
+                startActivityForResult(search, REQUEST_CODE);
+                break;
+            case R.id.exitApp:
+                Toast.makeText(MainActivity.this, "退出APP", Toast.LENGTH_SHORT).show();
+                onDestroy();
+                finish();
+                break;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -106,7 +110,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private void initView() {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
 
-        helper = new MusicHelper(this,"LIST.db",null,1);
+        helper = new MusicHelper(this, "LIST.db", null, 1);
         helper.getWritableDatabase();
 
         tabEurope = (LinearLayout) findViewById(R.id.europe_tab);
@@ -120,7 +124,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         imageView4 = (ImageView) findViewById(R.id.tab_img4);
 
         fragmentList = new ArrayList<>();
-        Fragment mTab1 = new BandMain();
+        final Fragment mTab1 = new BandMain();
         Fragment mTab2 = new BangCMain();
         Fragment mTab3 = new BangHkMain();
         Fragment mTab4 = new BangHMain();
@@ -167,7 +171,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         resetImg();
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.europe_tab:
                 setPagerSelect(0);
                 break;
@@ -214,4 +218,5 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         setTab(i);
         viewPager.setCurrentItem(i);
     }
+
 }

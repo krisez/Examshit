@@ -1,12 +1,9 @@
 package com.redrock.my.smusic.SongOfBangdan;
 
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,19 +14,13 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.widget.LinearLayout.LayoutParams;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.redrock.my.smusic.Download.DownloadM;
-import com.redrock.my.smusic.PlayList.MusicHelper;
 import com.redrock.my.smusic.PlaySong.PlayActivity;
 import com.redrock.my.smusic.SomeTool.DividerItemDecoration;
 import com.redrock.my.smusic.MyCallback;
@@ -49,7 +40,6 @@ import java.util.List;
 @SuppressLint("ValidFragment")
 public class BandMain extends Fragment {
 
-    private DownloadM downloadM = new DownloadM();
     private RecyclerView recyclerView;
     private BangdanAdapterofR adapter;
     private List<BangdanItem> bangdanItemList = new ArrayList<>();
@@ -99,24 +89,16 @@ public class BandMain extends Fragment {
                     intent.putExtra("songAuthor", bangdanItemList.get(position).getSongAuthor());
                     intent.putExtra("albumBig", bangdanItemList.get(position).getBigAlbum());
                     intent.putExtra("playUrl", bangdanItemList.get(position).getPlayUrl());
+                    intent.putExtra("playDown",bangdanItemList.get(position).getDownUrl());
                     startActivity(intent);
             }
 
             @Override
             public void onItemLongClick(final View view, final int position) {
-                Toast.makeText(view.getContext(), "开始下载...", Toast.LENGTH_SHORT).show();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        downloadM.downFile(bangdanItemList.get(position).getDownUrl(),bangdanItemList.get(position).getSongName(),".mp3");
-                        Toast.makeText(view.getContext(), "下载完成", Toast.LENGTH_SHORT).show();
-                    }
-                }).start();
             }
         });
         getData();
     }
-
 
     @Nullable
     @Override
@@ -167,7 +149,6 @@ public class BandMain extends Fragment {
                         Message message = new Message();
                         handler.sendMessage(message);
                     }
-
                     @Override
                     public void onError(Exception e) {
                     }
