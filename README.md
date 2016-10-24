@@ -1,4 +1,4 @@
-# MRedRock's 考核
+# MRedRock's 考核 QQMusic 热榜
 ## 加载进入app。首先用了一个等待界面（其实想通过sp进行用户判断先看哪一个视角，但是CheckBox蛋疼了一把）
 ## 然后进入主界面在这里分为四个Fragment进行ViewPager，下拉进行刷新重新加载adapter，没有再加载更多（定值加载歌曲数量（哭~））
 <img src="https://github.com/krisez/Examshit/blob/master/gif/first.gif" width="200px" height="250px"/>
